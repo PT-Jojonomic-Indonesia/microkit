@@ -8,8 +8,10 @@ import (
 	sentry_go "github.com/getsentry/sentry-go"
 )
 
-func Init(cfg sentry_go.ClientOptions) {
-	err := sentry_go.Init(cfg)
+type Config sentry_go.ClientOptions
+
+func Init(cfg Config) {
+	err := sentry_go.Init(sentry_go.ClientOptions(cfg))
 	if err != nil {
 		log.Fatalf("Init Senty: %s", err)
 	}
