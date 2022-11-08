@@ -1,7 +1,6 @@
 package sentry
 
 import (
-	"fmt"
 	"log"
 	"time"
 
@@ -21,10 +20,6 @@ func Close() {
 	sentry_go.Flush(2 * time.Second)
 }
 
-func Capture(data interface{}) {
-	sentry_go.CaptureMessage(fmt.Sprintf("%+v", data))
-}
+var Capture = sentry_go.CaptureMessage
 
-func CaptureError(err error) {
-	sentry_go.CaptureException(err)
-}
+var CaptureError = sentry_go.CaptureException
