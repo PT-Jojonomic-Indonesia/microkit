@@ -3,7 +3,7 @@ package main
 import (
 	"context"
 
-	"bitbucket.org/jojocoders/microkit/service"
+	"github.com/PT-Jojonomic-Indonesia/microkit/service"
 )
 
 type OpenInput struct {

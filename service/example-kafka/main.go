@@ -6,13 +6,13 @@ import (
 	"os"
 	"strconv"
 
-	"bitbucket.org/jojocoders/microkit/kafka"
-	"bitbucket.org/jojocoders/microkit/server"
-	"bitbucket.org/jojocoders/microkit/tracer"
+	"github.com/PT-Jojonomic-Indonesia/microkit/kafka"
+	"github.com/PT-Jojonomic-Indonesia/microkit/server"
+	"github.com/PT-Jojonomic-Indonesia/microkit/tracer"
 
 	kafka_go "github.com/segmentio/kafka-go"
 
-	"bitbucket.org/jojocoders/microkit/validator"
+	"github.com/PT-Jojonomic-Indonesia/microkit/validator"
 
 	"github.com/joho/godotenv"
 )

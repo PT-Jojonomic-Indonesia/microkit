@@ -4,8 +4,8 @@ import (
 	"net/http"
 	"os"
 
-	"bitbucket.org/jojocoders/microkit/kafka"
-	"bitbucket.org/jojocoders/microkit/response"
+	"github.com/PT-Jojonomic-Indonesia/microkit/kafka"
+	"github.com/PT-Jojonomic-Indonesia/microkit/response"
 )
 
 var healthHandler = func(w http.ResponseWriter, r *http.Request) {

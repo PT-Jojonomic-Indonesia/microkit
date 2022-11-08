@@ -4,8 +4,8 @@ import (
 	"log"
 	"os"
 
-	"bitbucket.org/jojocoders/microkit/server"
-	"bitbucket.org/jojocoders/microkit/tracer"
+	"github.com/PT-Jojonomic-Indonesia/microkit/server"
+	"github.com/PT-Jojonomic-Indonesia/microkit/tracer"
 
 	"github.com/joho/godotenv"
 )

@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"net/http"
 
-	"bitbucket.org/jojocoders/microkit/database/postgres"
-	"bitbucket.org/jojocoders/microkit/response"
+	"github.com/PT-Jojonomic-Indonesia/microkit/database/postgres"
+	"github.com/PT-Jojonomic-Indonesia/microkit/response"
 )
 
 var healthHandler = func(w http.ResponseWriter, r *http.Request) {

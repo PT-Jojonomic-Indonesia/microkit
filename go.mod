@@ -3,7 +3,6 @@ module github.com/PT-Jojonomic-Indonesia/microkit
 go 1.19
 
 require (
-	bitbucket.org/jojocoders/microkit v0.0.0-20221107074034-fdf51d99fbe4
 	github.com/getsentry/sentry-go v0.14.0
 	github.com/go-playground/validator/v10 v10.11.1
 	github.com/gorilla/mux v1.8.0

@@ -3,8 +3,8 @@ package main
 import (
 	"net/http"
 
-	"bitbucket.org/jojocoders/microkit/database/db2"
-	"bitbucket.org/jojocoders/microkit/response"
+	"github.com/PT-Jojonomic-Indonesia/microkit/database/db2"
+	"github.com/PT-Jojonomic-Indonesia/microkit/response"
 )
 
 var healthHandler = func(w http.ResponseWriter, r *http.Request) {

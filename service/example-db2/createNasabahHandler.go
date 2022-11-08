@@ -5,9 +5,9 @@ import (
 	"log"
 	"net/http"
 
-	"bitbucket.org/jojocoders/microkit/response"
-	"bitbucket.org/jojocoders/microkit/service/example-db2/entity"
-	"bitbucket.org/jojocoders/microkit/tracer"
+	"github.com/PT-Jojonomic-Indonesia/microkit/response"
+	"github.com/PT-Jojonomic-Indonesia/microkit/service/example-db2/entity"
+	"github.com/PT-Jojonomic-Indonesia/microkit/tracer"
 )
 
 var createNasabahHandler = func(w http.ResponseWriter, r *http.Request) {

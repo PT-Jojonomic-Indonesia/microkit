@@ -4,8 +4,8 @@ import (
 	"context"
 	"time"
 
-	"bitbucket.org/jojocoders/microkit/database/postgres"
-	"bitbucket.org/jojocoders/microkit/service/example-postgres/entity"
+	"github.com/PT-Jojonomic-Indonesia/microkit/database/postgres"
+	"github.com/PT-Jojonomic-Indonesia/microkit/service/example-postgres/entity"
 )
 
 var CreateNasabah = func(ctx context.Context, data *entity.Nasabah) error {

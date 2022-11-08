@@ -5,10 +5,10 @@ import (
 	"log"
 	"os"
 
-	"bitbucket.org/jojocoders/microkit/database/postgres"
-	"bitbucket.org/jojocoders/microkit/server"
-	"bitbucket.org/jojocoders/microkit/service/example-postgres/entity"
-	"bitbucket.org/jojocoders/microkit/tracer"
+	"github.com/PT-Jojonomic-Indonesia/microkit/database/postgres"
+	"github.com/PT-Jojonomic-Indonesia/microkit/server"
+	"github.com/PT-Jojonomic-Indonesia/microkit/service/example-postgres/entity"
+	"github.com/PT-Jojonomic-Indonesia/microkit/tracer"
 
 	"github.com/joho/godotenv"
 	"gorm.io/gorm"

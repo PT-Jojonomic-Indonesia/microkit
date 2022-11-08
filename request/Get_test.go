@@ -2,11 +2,10 @@ package request
 
 import (
 	"context"
-	"log"
 	"sync"
 	"testing"
 
-	"bitbucket.org/jojocoders/microkit/tracer"
+	"github.com/PT-Jojonomic-Indonesia/microkit/tracer"
 	"github.com/sony/gobreaker"
 	"github.com/stretchr/testify/assert"
 )
@@ -22,35 +21,20 @@ func TestGetWithCircuitBreaker(t *testing.T) {
 	var wg sync.WaitGroup
 	var m sync.Mutex
 	var openStatus int
-	var closeStatus int
-	var errCount int
 
 	for i := 0; i < 10; i++ {
 		wg.Add(1)
 		go func(iterate int) {
 			defer wg.Done()
 
-			testUrl := "https://jsonplaceholder.typicode.com/todos/100000"
-			if iterate >= 8 {
+			testUrl := "htt://jsonplaceholder.typicode.com/todos/1"
+			if iterate == 9 {
 				testUrl = "https://jsonplaceholder.typicode.com/todos/1"
 			}
 			res := make(map[string]interface{})
-			err := Get(context.Background(), testUrl, &res)
-			log.Printf("cp state : %v", cb.State())
-
-			if err != nil {
-				m.Lock()
-				errCount += 1
-				m.Unlock()
-			}
-
-			if cb.State() == gobreaker.StateClosed {
-				m.Lock()
-				closeStatus += 1
-				m.Unlock()
-			}
-
-			if cb.State() == gobreaker.StateOpen {
+			errReq := Get(context.Background(), testUrl, &res)
+			t.Log(errReq)
+			if cb.State().String() == "open" && errReq == gobreaker.ErrOpenState {
 				m.Lock()
 				openStatus += 1
 				m.Unlock()
@@ -60,7 +44,5 @@ func TestGetWithCircuitBreaker(t *testing.T) {
 	wg.Wait()
 	mapCp.Delete("jsonplaceholder.typicode.com")
 
-	assert.Equal(t, 3, openStatus)
-	assert.Equal(t, 7, closeStatus)
-	assert.Equal(t, 8, errCount)
+	assert.GreaterOrEqual(t, openStatus, 1)
 }

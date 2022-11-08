@@ -1,5 +1,5 @@
-bitbucket.org/jojocoders/microkit v0.0.0-20221107074034-fdf51d99fbe4 h1:tsfCkEDbiJjAitTV9ue7tZ+qdkWfbYGHuZ+TZQvm7fc=
-bitbucket.org/jojocoders/microkit v0.0.0-20221107074034-fdf51d99fbe4/go.mod h1:TS2eICwXM6tnBVD+rl1khOchKxmqU2wU5TtyRWwleEs=
+github.com/PT-Jojonomic-Indonesia/microkit v0.0.0-20221107074034-fdf51d99fbe4 h1:tsfCkEDbiJjAitTV9ue7tZ+qdkWfbYGHuZ+TZQvm7fc=
+github.com/PT-Jojonomic-Indonesia/microkit v0.0.0-20221107074034-fdf51d99fbe4/go.mod h1:TS2eICwXM6tnBVD+rl1khOchKxmqU2wU5TtyRWwleEs=
 github.com/BurntSushi/toml v0.3.1/go.mod h1:xHWCNGjB5oqiDr8zfno3MHue2Ht5sIBksp03qcyfWMU=
 github.com/Masterminds/semver/v3 v3.1.1 h1:hLg3sBzpNErnxhQtUy/mmLR2I9foDujNK030IGemrRc=
 github.com/Masterminds/semver/v3 v3.1.1/go.mod h1:VPu/7SZ7ePZ3QOrcuXROw5FAcLl4a0cBrbBpGY/8hQs=

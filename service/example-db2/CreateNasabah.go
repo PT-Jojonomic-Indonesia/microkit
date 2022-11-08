@@ -3,8 +3,8 @@ package main
 import (
 	"context"
 
-	"bitbucket.org/jojocoders/microkit/database/db2"
-	"bitbucket.org/jojocoders/microkit/service/example-db2/entity"
+	"github.com/PT-Jojonomic-Indonesia/microkit/database/db2"
+	"github.com/PT-Jojonomic-Indonesia/microkit/service/example-db2/entity"
 )
 
 var CreateNasabah = func(ctx context.Context, data *entity.Nasabah) error {

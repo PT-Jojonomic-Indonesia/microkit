@@ -4,8 +4,8 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"bitbucket.org/jojocoders/microkit/response"
-	"bitbucket.org/jojocoders/microkit/tracer"
+	"github.com/PT-Jojonomic-Indonesia/microkit/response"
+	"github.com/PT-Jojonomic-Indonesia/microkit/tracer"
 
 	"go.opentelemetry.io/otel/attribute"
 )

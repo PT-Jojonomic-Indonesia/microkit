@@ -7,9 +7,9 @@ import (
 	"net/http"
 	"os"
 
-	"bitbucket.org/jojocoders/microkit/response"
-	"bitbucket.org/jojocoders/microkit/server"
-	"bitbucket.org/jojocoders/microkit/tracer"
+	"github.com/PT-Jojonomic-Indonesia/microkit/response"
+	"github.com/PT-Jojonomic-Indonesia/microkit/server"
+	"github.com/PT-Jojonomic-Indonesia/microkit/tracer"
 
 	"github.com/gorilla/mux"
 	"github.com/joho/godotenv"

@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"time"
 
-	"bitbucket.org/jojocoders/microkit/kafka"
-	"bitbucket.org/jojocoders/microkit/service/example-kafka/entity"
+	"github.com/PT-Jojonomic-Indonesia/microkit/kafka"
+	"github.com/PT-Jojonomic-Indonesia/microkit/service/example-kafka/entity"
 )
 
 func PublishNasabah(data *entity.Nasabah) error {
