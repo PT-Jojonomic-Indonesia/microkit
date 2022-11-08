@@ -7,14 +7,17 @@ import (
 	"os"
 	"os/signal"
 	"time"
+
+	"github.com/gorilla/handlers"
 )
 
 func Serve(port string, r http.Handler) {
+	recoverHandler := handlers.RecoveryHandler()(r)
 
 	s := &http.Server{
 		ConnState:      CW.OnStateChange,
 		Addr:           ":" + port,
-		Handler:        r,
+		Handler:        recoverHandler,
 		ReadTimeout:    90 * time.Second,
 		WriteTimeout:   90 * time.Second,
 		MaxHeaderBytes: 1 << 20,
