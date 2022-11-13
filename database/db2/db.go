@@ -39,7 +39,7 @@ var Health = func() error {
 }
 
 var Exec = func(ctx context.Context, query string, args ...interface{}) (affected int64, err error) {
-	rs, err := DB.ExecContext(ctx, query, args)
+	rs, err := DB.ExecContext(ctx, query, args...)
 	if err != nil {
 		return
 	}
@@ -54,10 +54,10 @@ var NamedExec = func(ctx context.Context, query string, args interface{}) (affec
 	return rs.RowsAffected()
 }
 
-var Get = func(ctx context.Context, dest interface{}, query string, args interface{}) error {
-	return DB.GetContext(ctx, dest, query, args)
+var Get = func(ctx context.Context, dest interface{}, query string, args ...interface{}) error {
+	return DB.GetContext(ctx, dest, query, args...)
 }
 
-var Select = func(ctx context.Context, dest interface{}, query string, args interface{}) error {
-	return DB.SelectContext(ctx, dest, query, args)
+var Select = func(ctx context.Context, dest interface{}, query string, args ...interface{}) error {
+	return DB.SelectContext(ctx, dest, query, args...)
 }
