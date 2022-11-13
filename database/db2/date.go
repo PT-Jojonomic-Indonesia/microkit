@@ -1,4 +1,4 @@
-package entity
+package db2
 
 import (
 	"database/sql/driver"
