@@ -13,7 +13,5 @@ func StartHTTP(r *http.Request, spanName string) (ctxSpan context.Context, span 
 	spanID := r.Header.Get("span-id")
 
 	ctxSpan, span = Start(ctx, spanName, traceID, spanID)
-	defer span.End()
-
 	return
 }
