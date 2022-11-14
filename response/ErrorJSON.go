@@ -9,9 +9,15 @@ func ErrorJSON(w http.ResponseWriter, data interface{}, statusCode int) {
 	if data != nil {
 		response["error"] = true
 
-		response["message"] = data
-		if e, ok := data.(error); ok {
-			response["message"] = e.Error()
+		switch r := data.(type) {
+		case string:
+			response["message"] = r
+		case error:
+			response["message"] = r.Error()
+		case map[string]interface{}:
+			response["data"] = r
+		case struct{}:
+			response["data"] = r
 		}
 
 		JSON(w, response, statusCode)
