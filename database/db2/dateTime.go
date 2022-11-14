@@ -8,19 +8,19 @@ import (
 	"time"
 )
 
-type ISODateTime struct {
+type DateTime struct {
 	Format string
 	time.Time
 }
 
-func NewISODateTime() *ISODateTime {
-	return &ISODateTime{
+func NewDateTime() *DateTime {
+	return &DateTime{
 		Format: time.RFC3339,
 		Time:   time.Now(),
 	}
 }
 
-func (Date *ISODateTime) UnmarshalJSON(b []byte) error {
+func (Date *DateTime) UnmarshalJSON(b []byte) error {
 	var s string
 	if err := json.Unmarshal(b, &s); err != nil {
 		return err
@@ -31,14 +31,14 @@ func (Date *ISODateTime) UnmarshalJSON(b []byte) error {
 	return nil
 }
 
-func (Date *ISODateTime) MarshalJSON() ([]byte, error) {
+func (Date *DateTime) MarshalJSON() ([]byte, error) {
 	if Date.Time.IsZero() {
 		return []byte{}, nil
 	}
 	return json.Marshal(Date.Time.Format(Date.Format))
 }
 
-func (Date *ISODateTime) Scan(value interface{}) error {
+func (Date *DateTime) Scan(value interface{}) error {
 	Date.Format = time.RFC3339
 
 	switch v := value.(type) {
@@ -64,7 +64,7 @@ func (Date *ISODateTime) Scan(value interface{}) error {
 	return nil
 }
 
-func (Date ISODateTime) Value() (driver.Value, error) {
+func (Date DateTime) Value() (driver.Value, error) {
 	dateStr := Date.Time.Format(Date.Format)
 	if dateStr == "" {
 		return nil, nil
