@@ -18,6 +18,7 @@ import (
 
 var otelTracer trc.Tracer
 var logger *log.Logger
+var TracerProvider *trace.TracerProvider
 
 func InitOtel(url string, serviceName, version, environment string) {
 	logger = log.New(os.Stdout, "", log.LstdFlags|log.Llongfile)
@@ -38,6 +39,7 @@ func InitOtel(url string, serviceName, version, environment string) {
 
 	otel.SetTracerProvider(tp)
 
+	TracerProvider = tp
 	otelTracer = otel.Tracer("service")
 }
 
