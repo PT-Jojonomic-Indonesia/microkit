@@ -2,7 +2,6 @@ package tracer
 
 import (
 	"context"
-	"fmt"
 	"io"
 	"log"
 	"os"
@@ -18,17 +17,17 @@ import (
 )
 
 var otelTracer trc.Tracer
+var logger *log.Logger
 
 func InitOtel(url string, serviceName, version, environment string) {
-
+	logger = log.New(os.Stdout, "", log.LstdFlags|log.Llongfile)
 	exp, err := jaeger.New(jaeger.WithCollectorEndpoint(jaeger.WithEndpoint(url)))
 	if err != nil {
 		log.Println(err)
 		return
 	}
 
-	f, _ := os.Create("trace.txt")
-	exp2, _ := newExporter(f)
+	exp2, _ := newExporter(logger.Writer())
 
 	tp := trace.NewTracerProvider(
 		trace.WithBatcher(exp),
@@ -64,7 +63,6 @@ func newExporter(w io.Writer) (trace.SpanExporter, error) {
 }
 
 func Start(ctx context.Context, spanName string, traceID, spanID string) (ctxSpan context.Context, span trc.Span) {
-	log.Println(traceID)
 	if traceID != "" {
 		var spanContextConfig trc.SpanContextConfig
 		spanContextConfig.TraceID, _ = trc.TraceIDFromHex(traceID)
@@ -73,8 +71,6 @@ func Start(ctx context.Context, spanName string, traceID, spanID string) (ctxSpa
 		spanContextConfig.Remote = true
 
 		spanContext := trc.NewSpanContext(spanContextConfig)
-
-		fmt.Println("IS VALID? ", spanContext.IsValid()) // check if okay
 
 		ctx = trc.ContextWithSpanContext(ctx, spanContext)
 		ctxSpan, span = otelTracer.Start(ctx, spanName)
