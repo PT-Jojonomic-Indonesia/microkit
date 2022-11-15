@@ -1,6 +1,6 @@
 # Microservice Boilerplate #
 
-Repository ini merupakan template yang akan digunakan untuk membuat microservice baru. Template ini sudah terintegrasi dengan beberapa tools yang akan membantu developer dalam membuat microservice.
+Repository ini merupakan template yang akan digunakan untuk membuat microservice baru. Template ini sudah terintegrasi dengan beberapa tools yang akan membantu developer dalam membuat microservice. Jika ingin membuat microservice dengan dependency, Anda dapat menggunakan library di repository ini tanpa perlu clone atau copy-paste library di sini ke repository Anda.
 
 ## Pembuatan Service Baru ##
 Jika service yang dibuat memiliki banyak sub service yang saling berkaitan, maka sebaiknya dikumpulkan dalam satu repository. Package `main` dari service-service tersebut dikumpulkan di folder `service`. Pada template ini, sudah ada service `sum_caller` dan service `sum`.
@@ -32,3 +32,13 @@ docker run -p 8001:8001 --env DB_HOST=<<db host>> --env DB_PORT=<<db port>> --en
 ```
 
 isi value env sesuai config yang di gunakan 
+
+
+# Open Telemetry #
+Untuk menggunakan open telemetry, Anda harus melakukan konfigurasi terlebih dahulu. Konfigurasi yang harus dilakukan adalah sebagai berikut:
+```
+url := os.Getenv("OTEL_EXPORTER_JAEGER_ENDPOINT") // url jaeger misal: http://localhost:14268/api/traces
+serviceName := os.Getenv("OTEL_SERVICE_NAME") // nama service, misal: user-service
+environment := os.Getenv("OTEL_ENVIRONMENT") // environment misal: production, staging, development
+tracer.InitOtel(url, serviceName, version, environment)
+```
