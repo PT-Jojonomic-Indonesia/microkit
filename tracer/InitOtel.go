@@ -21,6 +21,7 @@ var logger *log.Logger
 
 func InitOtel(url string, serviceName, version, environment string) {
 	logger = log.New(os.Stdout, "", log.LstdFlags|log.Llongfile)
+	logger.Println("init otel ", url, serviceName, version, environment)
 	exp, err := jaeger.New(jaeger.WithCollectorEndpoint(jaeger.WithEndpoint(url)))
 	if err != nil {
 		log.Println(err)
