@@ -5,6 +5,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"time"
+
+	"github.com/go-openapi/strfmt"
 )
 
 var DateLayout = "2006-01-02"
@@ -68,4 +70,8 @@ func (Date Date) Value() (driver.Value, error) {
 	}
 
 	return dateStr, nil
+}
+
+func (Date Date) Validate(strfmt.Registry) error {
+	return nil
 }
