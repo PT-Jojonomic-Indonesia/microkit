@@ -2,6 +2,8 @@ package validator
 
 import (
 	"context"
+	"fmt"
+	"reflect"
 	"strconv"
 
 	validator_lib "github.com/go-playground/validator/v10"
@@ -39,7 +41,19 @@ func validateNumberOfDigit(fl validator_lib.FieldLevel) bool {
 		panic(err.Error())
 	}
 
-	v := field.Int()
+	var v int
+
+	switch field.Kind() {
+	case reflect.Int:
+		v = int(field.Int())
+	case reflect.Float32, reflect.Float64:
+		vInt, err := strconv.Atoi(fmt.Sprintf("%v", field.Float()))
+		if err != nil {
+			return false
+		}
+		v = vInt
+	}
+
 	if v < 0 {
 		panic("negative number")
 	}
