@@ -13,6 +13,9 @@ func Init() {
 }
 
 func Validate(ctx context.Context, data interface{}) error {
+	if validate == nil {
+		Init()
+	}
 	return validate.StructCtx(ctx, data)
 }
 
