@@ -47,7 +47,7 @@ func validateNumberOfDigit(fl validator_lib.FieldLevel) bool {
 	case reflect.Int:
 		v = int(field.Int())
 	case reflect.Float32, reflect.Float64:
-		vInt, err := strconv.Atoi(fmt.Sprintf("%v", field.Float()))
+		vInt, err := strconv.Atoi(fmt.Sprintf("%.0f", field.Float()))
 		if err != nil {
 			return false
 		}
