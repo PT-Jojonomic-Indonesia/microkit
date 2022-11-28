@@ -6,6 +6,8 @@ import (
 	"fmt"
 	"strings"
 	"time"
+
+	"github.com/go-openapi/strfmt"
 )
 
 type DateTime struct {
@@ -77,4 +79,8 @@ func (Date DateTime) Value() (driver.Value, error) {
 	dateStr = strings.Replace(dateStr, ":", ".", 2)
 
 	return dateStr, nil
+}
+
+func (Date DateTime) Validate(strfmt.Registry) error {
+	return nil
 }

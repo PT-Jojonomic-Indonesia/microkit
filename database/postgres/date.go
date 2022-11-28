@@ -1,4 +1,4 @@
-package db2
+package postgres
 
 import (
 	"database/sql/driver"
@@ -9,18 +9,9 @@ import (
 	"github.com/go-openapi/strfmt"
 )
 
-var DateLayout = "2006-01-02"
-
 type Date struct {
 	Format string
 	time.Time
-}
-
-func NewDate() Date {
-	return Date{
-		Format: DateLayout,
-		Time:   time.Now(),
-	}
 }
 
 func (Date *Date) UnmarshalJSON(b []byte) error {
@@ -28,10 +19,14 @@ func (Date *Date) UnmarshalJSON(b []byte) error {
 	if err := json.Unmarshal(b, &s); err != nil {
 		return err
 	}
-	Date.Format = DateLayout
+	Date.Format = "2006-01-02"
 	t, _ := time.Parse(Date.Format, s)
 	Date.Time = t
 	return nil
+}
+
+func (Date *Date) String() string {
+	return Date.Time.Format(Date.Format)
 }
 
 func (Date *Date) MarshalJSON() ([]byte, error) {
@@ -39,7 +34,7 @@ func (Date *Date) MarshalJSON() ([]byte, error) {
 }
 
 func (Date *Date) Scan(value interface{}) error {
-	Date.Format = DateLayout
+	Date.Format = "2006-01-02"
 	switch v := value.(type) {
 	case []byte:
 		d, err := time.Parse(Date.Format, string(v))
@@ -64,12 +59,7 @@ func (Date *Date) Scan(value interface{}) error {
 }
 
 func (Date Date) Value() (driver.Value, error) {
-	dateStr := Date.Time.Format(Date.Format)
-	if dateStr == "" {
-		return nil, nil
-	}
-
-	return dateStr, nil
+	return Date.Time.Format(Date.Format), nil
 }
 
 func (Date Date) Validate(strfmt.Registry) error {
