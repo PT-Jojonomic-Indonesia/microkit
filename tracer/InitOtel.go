@@ -19,8 +19,16 @@ import (
 var otelTracer trc.Tracer
 var logger *log.Logger
 var TracerProvider *trace.TracerProvider
+var initiated bool
 
 func InitOtel(url string, serviceName, version, environment string) {
+	if url == "" {
+		return
+	}
+	defer func() {
+		initiated = true
+		recover()
+	}()
 	logger = log.New(os.Stdout, "", log.LstdFlags|log.Llongfile)
 	logger.Println("init otel ", url, serviceName, version, environment)
 	exp, err := jaeger.New(jaeger.WithCollectorEndpoint(jaeger.WithEndpoint(url)))
@@ -66,6 +74,9 @@ func newExporter(w io.Writer) (trace.SpanExporter, error) {
 }
 
 func Start(ctx context.Context, spanName string, traceID, spanID string) (ctxSpan context.Context, span trc.Span) {
+	if !initiated {
+		return
+	}
 	if traceID != "" {
 		var spanContextConfig trc.SpanContextConfig
 		spanContextConfig.TraceID, _ = trc.TraceIDFromHex(traceID)
