@@ -3,6 +3,7 @@ package validator
 import (
 	"context"
 	"fmt"
+	"log"
 	"reflect"
 	"strconv"
 
@@ -28,7 +29,16 @@ func GetErrors(err error) map[string]interface{} {
 	if err != nil {
 		errs := err.(validator_lib.ValidationErrors)
 		for _, e := range errs {
-			mapErrors[e.Field()] = e.Error()
+			switch e.Tag() {
+			case "required":
+				mapErrors[e.Field()] = CustomRequredError(e.StructField())
+			case "lte":
+				mapErrors[e.Field()] = CustomLteError(e.Field(), e.Param())
+			case "int_lte":
+				mapErrors[e.Field()] = CustomLteError(e.Field(), e.Param())
+			default:
+				mapErrors[e.Field()] = e.Error()
+			}
 		}
 	}
 	return mapErrors
@@ -44,7 +54,7 @@ func validateNumberOfDigit(fl validator_lib.FieldLevel) bool {
 	var v int
 
 	switch field.Kind() {
-	case reflect.Int:
+	case reflect.Int, reflect.Int32, reflect.Int64:
 		v = int(field.Int())
 	case reflect.Float32, reflect.Float64:
 		vInt, err := strconv.Atoi(fmt.Sprintf("%.0f", field.Float()))
@@ -63,5 +73,15 @@ func validateNumberOfDigit(fl validator_lib.FieldLevel) bool {
 		n += 1
 	}
 
+	log.Println("n :", n)
+	log.Println("param :", param)
 	return n <= param
+}
+
+func CustomRequredError(field string) string {
+	return fmt.Sprintf(" data %v tidak boleh kosong", field)
+}
+
+func CustomLteError(field string, value interface{}) string {
+	return fmt.Sprintf(" data %v tidak melebihi %v karakter", field, value)
 }
