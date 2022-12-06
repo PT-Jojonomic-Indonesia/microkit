@@ -3,7 +3,6 @@ package validator
 import (
 	"context"
 	"fmt"
-	"log"
 	"reflect"
 	"strconv"
 
@@ -73,8 +72,6 @@ func validateNumberOfDigit(fl validator_lib.FieldLevel) bool {
 		n += 1
 	}
 
-	log.Println("n :", n)
-	log.Println("param :", param)
 	return n <= param
 }
 
