@@ -2,6 +2,7 @@ package db2
 
 import (
 	"context"
+	"database/sql"
 	"errors"
 	"log"
 	"reflect"
@@ -107,4 +108,22 @@ var GetSelectedColumnt = func(selectedColumn []string) string {
 	}
 
 	return strings.Join(selectedColumn, ",")
+}
+
+var Delete = func(ctx context.Context, query string, conditions []WhereStatementEntry) (err error) {
+	whereQuery, args := BuildWhereCondition(conditions...)
+	if whereQuery != "" {
+		query = query + whereQuery
+	}
+
+	affected, err := Exec(ctx, query, args...)
+	if err != nil {
+		return err
+	}
+
+	if affected == 0 {
+		return sql.ErrNoRows
+	}
+
+	return
 }
