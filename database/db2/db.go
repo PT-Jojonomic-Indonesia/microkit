@@ -110,6 +110,19 @@ var GetSelectedColumnt = func(selectedColumn []string) string {
 	return strings.Join(selectedColumn, ",")
 }
 
+var Update = func(ctx context.Context, query string, args interface{}) error {
+	affected, err := NamedExec(ctx, query, args)
+	if err != nil {
+		return err
+	}
+
+	if affected == 0 {
+		return sql.ErrNoRows
+	}
+
+	return err
+}
+
 var Delete = func(ctx context.Context, query string, conditions []WhereStatementEntry) (err error) {
 	whereQuery, args := BuildWhereCondition(conditions...)
 	if whereQuery != "" {
