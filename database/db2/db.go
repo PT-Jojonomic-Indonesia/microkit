@@ -74,7 +74,7 @@ var Select = func(ctx context.Context, dest interface{}, query string, args ...i
 	return DB.SelectContext(ctx, dest, query, args...)
 }
 
-var GetList = func(ctx context.Context, query string, conditions []WhereStatementEntry, dest interface{}, selectColumn ...string) (err error) {
+var GetList = func(ctx context.Context, query string, conditions []WhereStatementEntry, paginate *Paginate, dest interface{}, selectColumn ...string) (err error) {
 	if reflect.TypeOf(dest).Kind() != reflect.Pointer {
 		return errors.New("destination is not pointer")
 	}
@@ -82,6 +82,11 @@ var GetList = func(ctx context.Context, query string, conditions []WhereStatemen
 	whereQuery, args := BuildWhereCondition(conditions...)
 	if whereQuery != "" {
 		query = query + whereQuery
+	}
+
+	if paginate != nil {
+		query += "OFFSET ? LIMIT ?"
+		args = append(args, paginate.Offset, paginate.Limit)
 	}
 
 	err = Select(ctx, dest, query, args...)

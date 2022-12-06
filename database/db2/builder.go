@@ -64,3 +64,8 @@ var BuildWhereCondition = func(params ...WhereStatementEntry) (whereQuery string
 
 	return fmt.Sprintf(" WHERE %s", strings.Join(whereClause, " AND ")), args
 }
+
+type Paginate struct {
+	Limit  int
+	Offset int
+}
