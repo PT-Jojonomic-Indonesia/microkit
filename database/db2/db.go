@@ -85,8 +85,8 @@ var GetList = func(ctx context.Context, query string, conditions []WhereStatemen
 	}
 
 	if paginate != nil {
-		query += "OFFSET ? LIMIT ?"
-		args = append(args, paginate.Offset, paginate.Limit)
+		query += " LIMIT ? OFFSET ?"
+		args = append(args, paginate.Limit, paginate.Offset)
 	}
 
 	err = Select(ctx, dest, query, args...)
