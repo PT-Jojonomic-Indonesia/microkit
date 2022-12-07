@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"encoding/json"
 
 	"github.com/PT-Jojonomic-Indonesia/microkit/kafka"
@@ -9,8 +10,8 @@ import (
 	kafka_go "github.com/segmentio/kafka-go"
 )
 
-func HandleKafkaStream(successConn, retryConn *kafka_go.Conn) func(ey, value []byte) {
-	return func(key, value []byte) {
+func HandleKafkaStream(successConn, retryConn *kafka_go.Conn) func(ctx context.Context, key, value []byte) {
+	return func(ctx context.Context, key, value []byte) {
 		nasabah := &entity.Nasabah{}
 		if err := json.Unmarshal(value, nasabah); err != nil {
 			kafka.PublishWithClient(retryConn, key, value, nil)
@@ -18,7 +19,6 @@ func HandleKafkaStream(successConn, retryConn *kafka_go.Conn) func(ey, value []b
 		}
 
 		// handle some business logic here
-
 		kafka.PublishWithClient(successConn, key, value, nil)
 	}
 }

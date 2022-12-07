@@ -10,7 +10,7 @@ import (
 
 var maxReadByte int = 10e6 // 10MB
 
-func HandleReadStream(ctx context.Context, config *kafka.ReaderConfig, handler func(key, msg []byte)) {
+func HandleReadStream(ctx context.Context, config *kafka.ReaderConfig, handler func(ctx context.Context, key, msg []byte)) {
 	if config.MaxBytes == 0 {
 		config.MaxBytes = maxReadByte
 	}
@@ -29,6 +29,6 @@ func HandleReadStream(ctx context.Context, config *kafka.ReaderConfig, handler f
 
 		log.Printf("receive message at topic/partition/offset %v/%v/%v: %s\n", msg.Topic, msg.Partition, msg.Offset, string(msg.Key))
 
-		go handler(msg.Key, msg.Value)
+		go handler(ctx, msg.Key, msg.Value)
 	}
 }
