@@ -29,6 +29,16 @@ func HandleReadStream(ctx context.Context, config *kafka.ReaderConfig, handler f
 
 		log.Printf("receive message at topic/partition/offset %v/%v/%v: %s\n", msg.Topic, msg.Partition, msg.Offset, string(msg.Key))
 
-		go handler(ctx, msg.Key, msg.Value)
+		go consumerRecoverHandler(handler)(ctx, msg.Key, msg.Value)
 	}
+}
+
+func consumerRecoverHandler(h func(ctx context.Context, key, msg []byte)) func(ctx context.Context, key, msg []byte) {
+	defer func() {
+		if r := recover(); r != nil {
+			log.Println(r)
+		}
+	}()
+
+	return h
 }
