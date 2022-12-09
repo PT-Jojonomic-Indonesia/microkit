@@ -22,52 +22,59 @@ func NewDateTime() *DateTime {
 	}
 }
 
-func (Date *DateTime) UnmarshalJSON(b []byte) error {
+func (dt *DateTime) UnmarshalJSON(b []byte) error {
 	var s string
 	if err := json.Unmarshal(b, &s); err != nil {
 		return err
 	}
-	Date.Format = time.RFC3339
-	t, _ := time.Parse(Date.Format, s)
-	Date.Time = t
+	dt.Format = time.RFC3339
+	t, _ := time.Parse(dt.Format, s)
+	dt.Time = t
 	return nil
 }
 
-func (Date *DateTime) MarshalJSON() ([]byte, error) {
-	if Date.Time.IsZero() {
+func (dt *DateTime) MarshalJSON() ([]byte, error) {
+	if dt.Time.IsZero() {
 		return []byte{}, nil
 	}
-	return json.Marshal(Date.Time.Format(Date.Format))
+	return json.Marshal(dt.Time.Format(dt.Format))
 }
 
-func (Date *DateTime) Scan(value interface{}) error {
-	Date.Format = time.RFC3339
+func (d *DateTime) IsZero() bool {
+	if d == nil {
+		return true
+	}
+	return d.Time.IsZero()
+}
+
+func (dt *DateTime) Scan(value interface{}) error {
+	dt.Format = time.RFC3339
 
 	switch v := value.(type) {
 	case []byte:
-		d, err := time.Parse(Date.Format, string(v))
+		d, err := time.Parse(dt.Format, string(v))
 		if err != nil {
 			return err
 		}
-		Date.Time = d
+		dt.Time = d
 	case string:
-		d, err := time.Parse(Date.Format, v)
+		d, err := time.Parse(dt.Format, v)
 		if err != nil {
 			return err
 		}
-		Date.Time = d
+		dt.Time = d
 	case time.Time:
-		Date.Time = v
+		dt.Time = v
 	case nil:
-		Date.Time = time.Time{}
+		dt.Time = time.Time{}
 	default:
 		return fmt.Errorf("cannot sql.Scan() time.Time from: %#v", v)
 	}
 	return nil
 }
 
-func (Date DateTime) Value() (driver.Value, error) {
-	dateStr := Date.Time.Format(Date.Format)
+func (dt DateTime) Value() (driver.Value, error) {
+	dateStr := dt.Time.Format(dt.Format)
 	if dateStr == "" {
 		return nil, nil
 	}
