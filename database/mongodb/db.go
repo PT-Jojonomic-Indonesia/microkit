@@ -29,9 +29,9 @@ var Init = func(host, name, port string, authConfig AuthConfig) {
 		log.Panic(err)
 	}
 
-	db := client.Database(name)
+	DB = client.Database(name)
 	Client = client
-	log.Println("[info] connected to mongodb", db.Name())
+	log.Println("[info] connected to mongodb", DB.Name())
 }
 
 var GetCollection = func(collection string) *mongo.Collection {
