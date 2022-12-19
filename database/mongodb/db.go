@@ -38,9 +38,7 @@ var GetCollection = func(collection string) *mongo.Collection {
 	return DB.Collection(collection)
 }
 
-var Health = func() error {
-	ctx := context.Background()
-
+var Health = func(ctx context.Context) error {
 	if err := Client.Ping(ctx, readpref.Primary()); err != nil {
 		sentry.CaptureError(err)
 		return errors.New("mongo db is not available")
