@@ -24,7 +24,8 @@ func HandleReadStream(ctx context.Context, config *kafka.ReaderConfig, handler f
 	for {
 		msg, err := reader.ReadMessage(ctx)
 		if err != nil {
-			log.Fatal(err)
+			log.Println(err)
+			continue
 		}
 
 		log.Printf("receive message at topic/partition/offset %v/%v/%v: %s\n", msg.Topic, msg.Partition, msg.Offset, string(msg.Key))
